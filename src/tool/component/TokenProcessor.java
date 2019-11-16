@@ -76,7 +76,7 @@ public class TokenProcessor {
     }
 
     public void load(String file_url){
-        Pattern loader = Pattern.compile("^[\\d]+.[\\s]*\\|[\\s]*([a-zA-Z]+)[\\s]*\\|[\\s]*([\\d]+[.]?[\\d]*)$|^[\\d]+.[\\s]*\\|[\\s]*([!@#$%^&*()\\-+=|\\\\~`{\\[}\\]:;\"'<>?/,.]+)[\\s]*\\|[\\s]*([\\d]+[.]?[\\d]*)$");
+        Pattern loader = Pattern.compile("^[\\d]+.\\s+\\|\\s+([a-zA-Z]+|[!@#$%^&*()\\-+=|\\\\~`{\\[}\\]:;\\\"'<>?/,.]+)\\s+\\|\\s+([\\d]+.[\\d]+)$");
         Matcher m;
         File file;
         try {
@@ -90,6 +90,7 @@ public class TokenProcessor {
                 if (m.find()){
                     key = m.group(1);
                     id  = Double.parseDouble(m.group(2));
+                    System.out.println(key+" "+id);
                     tokenList.add(new Token(key,id));
                     TokenTableManager.get().add(key,id);
                 }
