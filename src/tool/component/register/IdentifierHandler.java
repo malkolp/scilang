@@ -1,4 +1,4 @@
-package tool.component;
+package tool.component.register;
 
 import java.util.HashMap;
 
@@ -29,7 +29,7 @@ class IdentifierHandler {
     }
 
     private static double generateKey(){
-        identifierCount = identifierCount + 0.1;
+        identifierCount = Math.round((identifierCount + 0.1)*10)/10.0;
         return identifierCount;
     }
 }

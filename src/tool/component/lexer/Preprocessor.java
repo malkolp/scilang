@@ -1,4 +1,4 @@
-package tool.component;
+package tool.component.lexer;
 
 public class Preprocessor {
 
@@ -10,12 +10,12 @@ public class Preprocessor {
         if (instance == null) instance = new Preprocessor();
     }
 
-    static Preprocessor get(){
+    public static Preprocessor get(){
         init();
         return instance;
     }
 
-    static void end(){
+    public static void end(){
         instance = null;
     }
 }

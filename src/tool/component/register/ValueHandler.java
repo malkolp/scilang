@@ -1,4 +1,4 @@
-package tool.component;
+package tool.component.register;
 
 import java.util.HashMap;
 

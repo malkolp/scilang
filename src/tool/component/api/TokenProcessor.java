@@ -1,4 +1,9 @@
-package tool.component;
+package tool.component.api;
+
+import tool.component.register.Token;
+import tool.component.register.TokenTableManager;
+import tool.component.support.Regex;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -21,24 +26,25 @@ public class TokenProcessor {
         if (instance == null)instance = new TokenProcessor();
     }
 
-    static TokenProcessor get(){
+    public static TokenProcessor get(){
         init();
         return instance;
     }
 
-    static void end(){
+    public static void end(){
         added = null;
         tokenList = null;
         instance = null;
         idPoint = 0;
     }
 
-    public void add(String key){
+    public void add(String key,double precedence,double property1,double property2){
         if (!TokenTableManager.contains(key) || Regex.isNotEmpty(key)){
             if (Regex.keyword(key)){
                 idPoint = Math.round((idPoint + 0.1) * 100.0) / 100.0;
-                added.add(new Token(key,idPoint));
-                TokenTableManager.get().add(key,idPoint);
+                Token tkn = new Token(key,idPoint,precedence,property1,property2);
+                added.add(tkn);
+                TokenTableManager.get().add(key,tkn);
             } else {
                 if (Regex.symbol(key)){
                     if (key.length() > 1){
@@ -54,21 +60,23 @@ public class TokenProcessor {
                         id2 = key.charAt(key.length()-1)+"";
 
                         if (!TokenTableManager.contains(id2)){
-                            add(id2);
+                            add(id2,precedence,property1,property2);
                         }
                         if (!TokenTableManager.contains(id1.toString())){
-                            add(id1.toString());
+                            add(id1.toString(),precedence,property1,property2);
                         }
-                        double idkey1 = TokenTableManager.token(id1.toString());
-                        double idkey2 = TokenTableManager.token(id2);
+                        double idkey1 = TokenTableManager.token(id1.toString()).getValue();
+                        double idkey2 = TokenTableManager.token(id2).getValue();
                         double new_idpoint = computeId(idkey1,idkey2);
-                        added.add(new Token(key,new_idpoint));
-                        TokenTableManager.get().add(key,idPoint);
+                        Token tkn = new Token(key,new_idpoint,precedence,property1,property2);
+                        added.add(tkn);
+                        TokenTableManager.get().add(key,tkn);
 
                     } else {
                         idPoint = Math.round((idPoint + 0.1) * 100.0) / 100.0;
-                        added.add(new Token(key,idPoint));
-                        TokenTableManager.get().add(key,idPoint);
+                        Token tkn = new Token(key,idPoint,precedence,property1,property2);
+                        added.add(tkn);
+                        TokenTableManager.get().add(key,tkn);
                     }
                 }
             }
@@ -76,7 +84,7 @@ public class TokenProcessor {
     }
 
     public void load(String file_url){
-        Pattern loader = Pattern.compile("^[\\d]+.\\s+\\|\\s+([a-zA-Z]+|[!@#$%^&*()\\-+=|\\\\~`{\\[}\\]:;\\\"'<>?/,.]+)\\s+\\|\\s+([\\d]+.[\\d]+)$");
+        Pattern loader = Pattern.compile("^[\\d]+.\\s+\\|\\s+([a-zA-Z]+|[!@#$%^&*()\\-+=|\\\\~`{\\[}\\]:;\\\"'<>?/,.]+)\\s+\\|\\s+([\\d]+.[\\d]+)\\s+\\|\\s+([\\d]+.[\\d]|[\\d]+)\\s+\\|\\s+([\\d]+.[\\d]|[\\d]+)\\s+\\|\\s+([\\d]+.[\\d]|[\\d]+)\\s*$");
         Matcher m;
         File file;
         try {
@@ -85,14 +93,21 @@ public class TokenProcessor {
             String tmp = "";
             String key = "";
             double id = 0;
+            double precedence = 0;
+            double property1 = 0;
+            double property2 = 0;
+            Token tkn;
             while ((tmp = reader.readLine())!= null){
                 m = loader.matcher(tmp);
                 if (m.find()){
                     key = m.group(1);
                     id  = Double.parseDouble(m.group(2));
-                    System.out.println(key+" "+id);
-                    tokenList.add(new Token(key,id));
-                    TokenTableManager.get().add(key,id);
+                    precedence  = Double.parseDouble(m.group(3));
+                    property1  = Double.parseDouble(m.group(4));
+                    property2  = Double.parseDouble(m.group(5));
+                    tkn = new Token(key,id,precedence,property1,property2);
+                    tokenList.add(tkn);
+                    TokenTableManager.get().add(key,tkn);
                 }
             }
             idPoint = id;
@@ -115,7 +130,12 @@ public class TokenProcessor {
                 bwriter = new BufferedWriter(writer);
 
                 for (int i = 0 ; i < tokenList.size(); i++)
-                    bwriter.write(write(i+1,tokenList.get(i).getKey(),tokenList.get(i).getValue()));
+                    bwriter.write(write(i+1
+                            ,tokenList.get(i).getKey()
+                            ,tokenList.get(i).getValue()
+                            ,tokenList.get(i).getPrecedence()
+                            ,tokenList.get(i).getProperty1()
+                            ,tokenList.get(i).getProperty2()));
 
                 bwriter.close();
                 writer.close();
@@ -127,8 +147,8 @@ public class TokenProcessor {
         thread.start();
     }
 
-    private String write(int index, String key, double id){
-        return index+".\t| "+key+"\t| "+id+"\n";
+    private String write(int index, String key, double id, double precedence, double p1, double p2){
+        return index+".\t| "+key+"\t| "+id+"\t| "+precedence+"\t| "+p1+"\t| "+p2+" \n";
     }
 
     private static double computeId(double id1, double id2){
@@ -142,20 +162,3 @@ public class TokenProcessor {
 
 }
 
-class Token{
-    private String key;
-    private double value;
-
-    Token(String key,double value){
-        this.key = key;
-        this.value = value;
-    }
-
-    String getKey() {
-        return key;
-    }
-
-    double getValue() {
-        return value;
-    }
-}

@@ -1,11 +1,15 @@
-package tool.component;
+package tool.component.lexer;
+
+import tool.component.register.Register;
+import tool.component.register.Token;
+import tool.component.support.Regex;
 
 import java.util.ArrayList;
 
 public class Lexer{
 
     private static Lexer instance;
-    private static ArrayList<Double> token;
+    private static ArrayList<Token> token;
 
     private Lexer(){}
 
@@ -13,12 +17,12 @@ public class Lexer{
         if (instance == null) instance = new Lexer();
     }
 
-    static Lexer get(){
+    public static Lexer get(){
         init();
         return instance;
     }
 
-    static void end(){
+    public static void end(){
         token = null;
         instance = null;
     }
@@ -115,7 +119,7 @@ public class Lexer{
         token.clear();
     }
 
-    public ArrayList<Double> getToken(){
+    public ArrayList<Token> getToken(){
         return token;
     }
 

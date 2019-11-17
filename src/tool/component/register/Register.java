@@ -1,29 +1,31 @@
-package tool.component;
+package tool.component.register;
+
+import tool.component.support.Regex;
 
 import java.util.ArrayList;
 
-class Register{
+public class Register{
 
-    private static ArrayList<Double> tokenList;
+    private static ArrayList<Token> tokenList;
 
     private Register(){}
 
-    static ArrayList<Double> getToken(){
-        ArrayList<Double> toReturn = (ArrayList<Double>) tokenList.clone();
+    public static ArrayList<Token> getToken(){
+        ArrayList<Token> toReturn = (ArrayList<Token>) tokenList.clone();
         resetTokenList();
         return toReturn;
     }
 
-    static void resetTokenList(){
+    public static void resetTokenList(){
         if (tokenList == null) tokenList = new ArrayList<>();
         tokenList.clear();
     }
 
-    static void end(){
+    public static void end(){
         tokenList = null;
     }
 
-    static void register(String key){
+    public static void register(String key){
         if (Regex.alphanum(key) | Regex.numConstant(key)){
             if (TokenTableManager.contains(key)){
                 tokenList.add(TokenTableManager.token(key));
@@ -73,27 +75,29 @@ class Register{
                 registerSymbol(key1.toString());
                 registerSymbol(key2);
             } else {
+                System.out.println(key);
                 registerError(key);
             }
         }
     }
 
-    static void registerString(String key){
-        double value = ValueHandler.get().registerValue(key,ValueHandler.STRING_TYPE);
-        tokenList.add(TokenTableManager.token(TokenTableManager.CONSTANT));
-        tokenList.add(value);
+    public static void registerString(String key){
+        Token token = TokenTableManager.token(TokenTableManager.CONSTANT).clone();
+        token.setProperty1(ValueHandler.get().registerValue(key,ValueHandler.STRING_TYPE));
+        tokenList.add(token);
     }
 
     private static void registerConstant(String key,double type){
-        double value = ValueHandler.get().registerValue(key,type);
-        tokenList.add(TokenTableManager.token(TokenTableManager.CONSTANT));
-        tokenList.add(value);
+        System.out.println(key+","+type);
+        Token token = TokenTableManager.token(TokenTableManager.CONSTANT).clone();
+        token.setProperty1(ValueHandler.get().registerValue(key, type));
+        tokenList.add(token);
     }
 
     private static void registerIdentifier(String key){
-        double value = IdentifierHandler.get().registerID(key);
-        tokenList.add(TokenTableManager.token(TokenTableManager.IDENTIFIER));
-        tokenList.add(value);
+        Token token = TokenTableManager.token(TokenTableManager.IDENTIFIER).clone();
+        token.setProperty1(IdentifierHandler.get().registerID(key));
+        tokenList.add(token);
     }
 
     private static void registerError(String key){

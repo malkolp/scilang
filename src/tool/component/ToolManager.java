@@ -1,5 +1,11 @@
 package tool.component;
 
+import tool.component.api.TokenProcessor;
+import tool.component.lexer.Lexer;
+import tool.component.lexer.Preprocessor;
+import tool.component.register.Register;
+import tool.component.register.TokenTableManager;
+
 public class ToolManager {
 
     public Lexer lexer(){

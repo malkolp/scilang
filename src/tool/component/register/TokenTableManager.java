@@ -1,4 +1,4 @@
-package tool.component;
+package tool.component.register;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,7 +7,7 @@ import java.util.Map;
 public class TokenTableManager {
 
     private static TokenTableManager instance;
-    private static HashMap<String,Double> tokenTable;
+    private static HashMap<String,Token> tokenTable;
 
     static final String IDENTIFIER = "#$id";
     static final String CONSTANT = "#$const";
@@ -15,9 +15,12 @@ public class TokenTableManager {
 
     private TokenTableManager(){
         tokenTable = new HashMap<>();
-        tokenTable.put(ERROR,0.0);
-        tokenTable.put(IDENTIFIER,0.1);
-        tokenTable.put(CONSTANT,0.2);
+        Token ERR = new Token(ERROR,-9.9,0,0,0);
+        Token CONST = new Token(CONSTANT,0.1,9,1,0);
+        Token ID = new Token(IDENTIFIER,0.2,9,2,0);
+        tokenTable.put(ERROR,ERR);
+        tokenTable.put(CONSTANT,CONST);
+        tokenTable.put(IDENTIFIER,ID);
     }
 
     private static void init(){
@@ -25,28 +28,29 @@ public class TokenTableManager {
             instance = new TokenTableManager();
     }
 
-    static TokenTableManager get(){
+    public static TokenTableManager get(){
         init();
         return instance;
     }
 
-    static void end(){
+    public static void end(){
         tokenTable = null;
         instance = null;
     }
 
-    void add(String key,double token){
+    public void add(String key,Token token){
         tokenTable.put(key,token);
     }
 
-    void remove(){tokenTable.clear();}
+    public void remove(){tokenTable.clear();}
 
-    static double token(String key){
+    public static Token token(String key){
         return tokenTable.get(key);
     }
 
-    static boolean contains(String key){
+    public static boolean contains(String key){
         return tokenTable.containsKey(key);
     }
 
 }
+
