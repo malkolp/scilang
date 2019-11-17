@@ -5,12 +5,15 @@ import tool.component.lexer.Lexer;
 import tool.component.lexer.Preprocessor;
 import tool.component.register.Register;
 import tool.component.register.TokenTableManager;
+import tool.component.syntactic.Automata;
 
 public class ToolManager {
 
     public Lexer lexer(){
         return Lexer.get();
     }
+
+    public Automata automata(){return Automata.get();}
 
     public Preprocessor preprocessor(){
         return Preprocessor.get();
@@ -33,6 +36,7 @@ public class ToolManager {
         TokenTableManager.end();
         TokenProcessor.end();
         Register.end();
+        Automata.end();
     }
 
     public void end(Object obj){
@@ -40,6 +44,7 @@ public class ToolManager {
         else if (obj == Preprocessor.get()) Preprocessor.end();
         else if (obj == TokenProcessor.get()) TokenProcessor.end();
         else if (obj == TokenTableManager.get()) TokenTableManager.end();
+        else if (obj == Automata.get()) Automata.end();
     }
 
 }
