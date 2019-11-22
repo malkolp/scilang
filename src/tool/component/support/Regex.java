@@ -106,4 +106,8 @@ public class Regex {
         Matcher m = p.matcher(value);
         return m.find();
     }
+
+    public static String importReader(String key,String text){
+        return "";
+    }
 }
