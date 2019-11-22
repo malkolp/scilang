@@ -37,6 +37,7 @@ public class Commander {
 
     public void renderCommand(){
         String temp_command = os.getCreatecommand();
+        temp_command = temp_command.replace("<|FILE_DIR|>",os.getInstallation_dir());
         temp_command = temp_command.replace("<|FILE_COMPILE|>",compileApp);
         temp_command = temp_command.replace("<|FILE_RUN|>",runApp);
         command = temp_command.split(";");

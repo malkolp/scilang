@@ -6,7 +6,7 @@ public class OS {
             new OSNode(
                     "ubuntu"
                     ,"/usr/bin"
-                    ,"touch <|FILE_COMPILE|>;touch <|FILE_RUN|>");
+                    ,"cd <|FILE_DIR|>;touch <|FILE_COMPILE|>;touch <|FILE_RUN|>");
     private OS(){}
 }
 
