@@ -1,5 +1,6 @@
 package tool.component.lexer;
 
+import tool.component.register.TokenTableManager;
 import tool.component.support.Regex;
 
 import java.io.*;
@@ -57,7 +58,7 @@ public class Preprocessor {
                 String processed;
                 while ((line = reader.readLine()) != null){
                     source.peek(line);
-                    if (!(processed = Regex.importReader("use",line)).equals("")) readChild(processed);
+                    if (!(processed = Regex.importReader(TokenTableManager.get().get_USE(),line)).equals("")) readChild(processed);
                 }
                 reader.close();
                 code = code + source.pop();
