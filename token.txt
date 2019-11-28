@@ -1,4 +1,4 @@
 name malkoc;
-use "pe pinapple apple pen";
-use "pen pinapple";
-use "apple pen";
+use "regenerator.txt";
+
+faking kiddeng mee nigga!!

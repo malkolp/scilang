@@ -41,28 +41,29 @@ public class Preprocessor {
 
     public void launch(String url){
         readChild(url);
+        readMemory.clear();
     }
 
     private void readChild(String file_url){
-        readMemory.put(file_url,true);
-        source.push();
-        File file = new File(file_url);
-        try {
-            FileInputStream is = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader reader = new BufferedReader(isr);
-            String line;
-            String processed;
-            while ((line = reader.readLine()) != null){
-                if (!(processed = Regex.importReader("use",line)).equals(""))
-                    readChild(processed);
-                else
+        if (!readMemory.containsKey(file_url)){
+            readMemory.put(file_url,true);
+            source.push();
+            File file = new File(file_url);
+            try {
+                FileInputStream is = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader reader = new BufferedReader(isr);
+                String line;
+                String processed;
+                while ((line = reader.readLine()) != null){
                     source.peek(line);
+                    if (!(processed = Regex.importReader("use",line)).equals("")) readChild(processed);
+                }
+                reader.close();
+                code = code + source.pop();
+            } catch (IOException e){
+                e.printStackTrace();
             }
-            reader.close();
-            code = code + source.pop();
-        } catch (IOException e){
-            e.printStackTrace();
         }
     }
 

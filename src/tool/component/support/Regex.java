@@ -108,7 +108,7 @@ public class Regex {
     }
 
     public static String importReader(String key,String text){
-        Pattern p = Pattern.compile(key+"\\s+\"\\s*([\\s/\\w!@$%^&*()+=-]+)\\s*\"\\s*;");
+        Pattern p = Pattern.compile(key+"\\s+\\\"\\s*([\\.\\s/\\w!@$%^&*()+=-]+)\\s*\\\"\\s*;");
         Matcher m = p.matcher(text);
         if (m.find()) return m.group(1);
         else return "";
