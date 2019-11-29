@@ -57,11 +57,13 @@ public class Preprocessor {
                 String line;
                 String processed;
                 while ((line = reader.readLine()) != null){
-                    source.peek(line);
-                    if (!(processed = Regex.importReader(TokenTableManager.get().get_USE(),line)).equals("")) readChild(processed);
+                    if (!(processed = Regex.importReader(TokenTableManager.get().get_USE(),line)).equals(""))
+                        readChild(processed);
+                    else
+                        source.peek(line);
                 }
                 reader.close();
-                code = code + source.pop();
+                code = code + source.pop()+" ";
             } catch (IOException e){
                 e.printStackTrace();
             }

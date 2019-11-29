@@ -88,7 +88,6 @@ public class Register{
     }
 
     private static void registerConstant(String key,double type){
-        System.out.println(key+","+type);
         Token token = TokenTableManager.token(TokenTableManager.CONSTANT).clone();
         token.setProperty1(ValueHandler.get().registerValue(key, type));
         tokenList.add(token);
