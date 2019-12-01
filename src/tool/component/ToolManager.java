@@ -23,6 +23,8 @@ public class ToolManager {
 
     public TokenProcessor tokenProcessor(){ return TokenProcessor.get(); }
 
+    public GrammarProcessor grammarProcessor(){return GrammarProcessor.get();}
+
     public Commander commander(){return Commander.get();}
 
     public TokenTableManager tokenTableManager(){return TokenTableManager.get();}
