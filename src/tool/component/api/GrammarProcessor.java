@@ -3,16 +3,18 @@ package tool.component.api;
 import tool.component.register.Token;
 import tool.component.syntactic.Grammar;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 
 public class GrammarProcessor {
 
     private static GrammarProcessor instance;
-    private HashMap<String,Grammar> grammarTable;
+    private static ArrayList<Grammar> grammarList;
+    private static ArrayList<String> grammarChild;
 
     private GrammarProcessor(){
-        grammarTable = new HashMap<>();
+        grammarList = new ArrayList<>();
+        grammarChild = new ArrayList<>();
     }
 
     private static void init(){
@@ -30,7 +32,10 @@ public class GrammarProcessor {
     }
 
     public void add(Token[] tokens,String key,double value, double precedence){
-
+        String token_key = "";
+        for (Token t:tokens) token_key = token_key + t.getValue();
+        grammarList.add(new Grammar(key, value, precedence));
+        grammarChild.add(token_key);
     }
 
     public void add(Grammar[] grammars,String key,double value, double precedence){
