@@ -1,6 +1,7 @@
 package tool.component;
 
 import tool.component.api.Commander;
+import tool.component.api.GrammarProcessor;
 import tool.component.api.TokenProcessor;
 import tool.component.lexer.Lexer;
 import tool.component.lexer.Preprocessor;
@@ -38,6 +39,7 @@ public class ToolManager {
         Preprocessor.end();
         TokenTableManager.end();
         TokenProcessor.end();
+        GrammarProcessor.end();
         Register.end();
         Automata.end();
         Commander.end();
@@ -47,9 +49,10 @@ public class ToolManager {
         if (obj == Lexer.get()) Lexer.end();
         else if (obj == Preprocessor.get()) Preprocessor.end();
         else if (obj == TokenProcessor.get()) TokenProcessor.end();
+        else if (obj == GrammarProcessor.get()) GrammarProcessor.end();
         else if (obj == TokenTableManager.get()) TokenTableManager.end();
         else if (obj == Automata.get()) Automata.end();
-        else  if (obj == Commander.get()) Commander.end();
+        else if (obj == Commander.get()) Commander.end();
     }
 
 }
