@@ -26,4 +26,8 @@ public class GrammarTableManager {
         instance = null;
     }
 
+    public void add(String key,Grammar grammar){
+        if (!grammarTable.containsKey(key))
+            grammarTable.put(key,grammar);
+    }
 }
