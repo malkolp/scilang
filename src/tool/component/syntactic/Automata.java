@@ -65,11 +65,7 @@ public class Automata {
     }
 
     private void proceed(){
-        if (pointSwitch == 1){
 
-        } else {
-
-        }
     }
 
     private void swap(double key){

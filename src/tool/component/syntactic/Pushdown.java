@@ -7,11 +7,13 @@ class Pushdown {
     private static Pushdown instance;
     private Node terminator,top;
     private Token constraint;
+    private int pointSwitch;
 
     private Pushdown(){
         constraint = new Token("$",0,0,0,0);
         terminator = new Node(constraint,null);
         top = terminator;
+        pointSwitch = 0;
     }
 
     private static void init(){
@@ -25,9 +27,13 @@ class Pushdown {
 
     void push(Token n){
         top = new Node(n,top);
+        pointSwitch = 0;
     }
 
-    void push(Grammar n) {top = new Node(n,top);}
+    void push(Grammar n) {
+        top = new Node(n,top);
+        pointSwitch = 1;
+    }
 
     Object pop(){
         Object obj;
@@ -40,6 +46,13 @@ class Pushdown {
         return obj;
     }
 
+    Object peek(){
+        return top;
+    }
+
+    int getPointSwitch(){
+        return pointSwitch;
+    }
 
     Token getConstraint() {
         return constraint;
