@@ -14,7 +14,11 @@ public class Automata {
     private Token pTkn;
     private int pointSwitch;
 
-    private Automata(){}
+    private String swapMemory;
+
+    private Automata(){
+        swapMemory = "";
+    }
 
     private static void init(){
         if (instance == null){
@@ -61,6 +65,16 @@ public class Automata {
     }
 
     private void proceed(){
+        if (pointSwitch == 1){
 
+        } else {
+
+        }
     }
+
+    private void swap(double key){
+        swapMemory = swapMemory + key;
+    }
+
+
 }
