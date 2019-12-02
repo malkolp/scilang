@@ -27,15 +27,19 @@ class Pushdown {
         top = new Node(n,top);
     }
 
-    Token pop(){
+    void push(Grammar n) {top = new Node(n,top);}
+
+    Object pop(){
+        Object obj;
         if (top == terminator)
             return terminator.getToken();
-        Token tkn = top.getToken();
+        obj = top.getToken();
         Node temp = top.getBottom();
         top = null;
         top = temp;
-        return tkn;
+        return obj;
     }
+
 
     Token getConstraint() {
         return constraint;
@@ -44,6 +48,7 @@ class Pushdown {
 
 class Node{
     private Token token;
+    private Grammar grammar;
     private Node bottom;
 
     Node(Token token, Node bottom){
@@ -51,11 +56,19 @@ class Node{
         this.bottom = bottom;
     }
 
+    Node(Grammar token, Node bottom){
+        this.grammar = token;
+        this.bottom = bottom;
+    }
+
     Node getBottom() {
         return bottom;
     }
 
-    Token getToken() {
+    Object getToken() {
+        if (token == null)
+            return grammar;
         return token;
     }
+
 }
