@@ -130,7 +130,7 @@ public class GrammarProcessor {
     }
 
     private String write(int index, String child, String key,double value, double precedence){
-        return index+".\t|\t"+child+"\t|\t"+key+"\t|\t"+value+"\t|\t"+precedence;
+        return index+".\t|\t"+child+"\t|\t"+key+"\t|\t"+value+"\t|\t"+precedence+"\n";
     }
 
 }

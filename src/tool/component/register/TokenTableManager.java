@@ -64,6 +64,14 @@ public class TokenTableManager {
         return tokenTable.get(key);
     }
 
+    public static Token idToken(){
+        return tokenTable.get(IDENTIFIER);
+    }
+
+    public static Token consToken(){
+        return tokenTable.get(CONSTANT);
+    }
+
     public static boolean contains(String key){
         return tokenTable.containsKey(key);
     }

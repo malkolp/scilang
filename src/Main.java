@@ -1,11 +1,8 @@
 import tool.Sci;
+import tool.component.api.GrammarProcessor;
 import tool.component.api.TokenProcessor;
-import tool.component.lexer.Lexer;
-import tool.component.lexer.Preprocessor;
 import tool.component.register.Token;
-
-import java.util.ArrayList;
-import java.util.Scanner;
+import tool.component.register.TokenTableManager;
 
 /*
     Author  : Malko
@@ -18,16 +15,17 @@ public class Main {
     public static void main(String[] args) {
         //CODE YOUR IMAGINATION HERE
         Sci.getComponent().init();
-        TokenProcessor tp = Sci.getComponent().tokenProcessor();
-        Preprocessor pr = Sci.getComponent().preprocessor();
-        Lexer lx = Sci.getComponent().lexer();
+        TokenProcessor    tp = Sci.getComponent().tokenProcessor();
+        GrammarProcessor  gp = Sci.getComponent().grammarProcessor();
 
         tp.load("token.txt");
-        pr.launch("code1.txt");
-        System.out.println(pr.getCode());
-        lx.lex(pr.getCode());
-        for (Token tkn:lx.getToken())
-            System.out.print("["+tkn.getKey()+"]");
+
+        Token[] exprID    = new Token[]{TokenTableManager.idToken()};
+        Token[] exprCONST = new Token[]{TokenTableManager.consToken()};
+
+        gp.add(exprID,"E",10);
+        gp.add(exprCONST, "E",10);
+        gp.save("grammar.txt");
     }
 
 
