@@ -1,6 +1,8 @@
 package tool.component.syntactic;
 
-public class Grammar {
+import tool.component.register.Token;
+
+public class Grammar implements Cloneable{
 
     private String key;
     private double value,precedence;
@@ -9,6 +11,15 @@ public class Grammar {
         this.key = key;
         this.value = value;
         this.precedence = precedence;
+    }
+
+    public Grammar clone(){
+        try {
+            return (Grammar) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String getKey() {

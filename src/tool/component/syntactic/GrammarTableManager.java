@@ -30,4 +30,8 @@ public class GrammarTableManager {
         if (!grammarTable.containsKey(key))
             grammarTable.put(key,grammar);
     }
+
+    public Grammar grammar(String key){
+        return grammarTable.get(key);
+    }
 }
