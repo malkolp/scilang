@@ -21,7 +21,6 @@ public class Main {
         Automata au    = Sci.getComponent().automata();
         p.launch("code1.txt");
         lx.lex(p.getCode());
-        au.set(lx.getToken());
     }
 
 
