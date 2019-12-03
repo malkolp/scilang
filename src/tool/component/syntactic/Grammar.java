@@ -1,7 +1,5 @@
 package tool.component.syntactic;
 
-import tool.component.register.Token;
-
 public class Grammar implements Cloneable{
 
     private String key;

@@ -16,12 +16,7 @@ public class Main {
     public static void main(String[] args) {
         //CODE YOUR IMAGINATION HERE
         Sci.getComponent().init();
-        TokenProcessor    tp = Sci.getComponent().tokenProcessor();
-        GrammarProcessor  gp = Sci.getComponent().grammarProcessor();
-
-        tp.load("token.txt");
-
-        gp.save("grammar.txt");
+        Sci.load("grammar.txt","token.txt");
     }
 
 
