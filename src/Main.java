@@ -3,6 +3,7 @@ import tool.component.api.GrammarProcessor;
 import tool.component.api.TokenProcessor;
 import tool.component.register.Token;
 import tool.component.register.TokenTableManager;
+import tool.component.syntactic.GrammarTableManager;
 
 /*
     Author  : Malko
@@ -20,11 +21,6 @@ public class Main {
 
         tp.load("token.txt");
 
-        Token[] exprID    = new Token[]{TokenTableManager.idToken()};
-        Token[] exprCONST = new Token[]{TokenTableManager.consToken()};
-
-        gp.add(exprID,"E",10);
-        gp.add(exprCONST, "E",10);
         gp.save("grammar.txt");
     }
 
